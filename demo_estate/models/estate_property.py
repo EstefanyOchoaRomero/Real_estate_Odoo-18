@@ -5,3 +5,4 @@ class EstateProperty(models.Model):
     _description = 'Real Estate Property'
 
     name = fields.Char(string="Title", required=True)
+    estate_property_field = fields.Char(string="Estate Property Field")
