@@ -21,7 +21,11 @@ You can register and view properties for sale or rent.
     # Always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/estate_property_views.xml',
+        # 'views/estate_property_view.xml',
+        'views/estate_property_form.xml',
+        'views/estate_property_tree.xml',
+        'views/estate_property_action.xml',
+        'views/estate_property_menu.xml'
     ],
 
     # Only loaded in demo mode

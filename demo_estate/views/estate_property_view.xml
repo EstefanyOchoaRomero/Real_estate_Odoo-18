@@ -1,0 +1,15 @@
+<!-- <odoo>
+    <data>
+        <record id="demo_estate_form_inherit" model="ir.ui.view">
+            <field name="name">estate.property.form.inherit</field>
+            <field name="model">estate.property</field>
+            <!-- Asegúrate de que el 'inherit_id' haga referencia a la vista correcta -->
+            <field name="inherit_id" ref="estate.view_estate_property_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <!-- Puedes agregar el contenido aquí -->
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo> -->
