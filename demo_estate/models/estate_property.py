@@ -5,10 +5,18 @@ from datetime import timedelta
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Real Estate Property'
+    
 
     property_type_id = fields.Many2one("estate.property.type", string="Property Type")
     buyer_id = fields.Many2one('res.partner', string="Buyer")
     salesperson_id = fields.Many2one('res.users', string="Salesperson", default=lambda self: self.env.user)
+    tag_ids = fields.Many2many('estate.property.tag', string='Tags')
+    offer_ids = fields.One2many('estate.property.offer', 'property_id', string="Offers")
+    
+    
+    name = fields.Char('Property Name', required=True)
+    price = fields.Float(string="Price")
+    partner_id = fields.Many2one('res.partner', string="Customer")
 
 
     name = fields.Char(string='Title', required=True)
@@ -43,3 +51,9 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('cancelled', 'Cancelled')
     ], string="State", default='new', required=True, copy=False)
+
+    status = fields.Selection([
+        ('available', 'Available'),
+        ('sold', 'Sold'),
+        ('pending', 'Pending')
+    ], string="Status")
