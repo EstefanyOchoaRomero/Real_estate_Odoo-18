@@ -28,7 +28,7 @@
         <field name="name">estate.property.tree.view</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <ltre>
+            <list>
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
@@ -60,6 +60,7 @@
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="status"/>
+                <!-- <field name="property_id"/> -->
             </list>
         </field>
     </record>
@@ -87,6 +88,7 @@
                         <field name="partner_id"/>
                         <field name="state"/>
                         <field name="status"/>
+                        <!-- <field name="property_id"/> -->
                     </group>    
                 </group>
                         
@@ -114,11 +116,11 @@
                     <page string="Offers">
                         <group>
                             <field name="offer_ids">
-                                <tree editable="bottom">
+                                <list editable="bottom">
                                     <field name="price"/>
                                     <field name="partner_id"/>
                                     <field name="status"/>
-                                </tree>
+                                </list>
                             </field>
                         </group>
                     </page>
@@ -167,6 +169,7 @@
                     <field name="price"/>
                     <field name="partner_id"/>
                     <field name="status"/>
+                    <!--<field name="property_id"/> -->
                 </group>
             </form>
         </field>

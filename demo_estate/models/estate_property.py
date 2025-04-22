@@ -11,12 +11,14 @@ class EstateProperty(models.Model):
     buyer_id = fields.Many2one('res.partner', string="Buyer")
     salesperson_id = fields.Many2one('res.users', string="Salesperson", default=lambda self: self.env.user)
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
-    offer_ids = fields.One2many('estate.property.offer', 'property_id', string="Offers")
     
-    
+
+
     name = fields.Char('Property Name', required=True)
     price = fields.Float(string="Price")
     partner_id = fields.Many2one('res.partner', string="Customer")
+    # property_id = fields.Many2one('estate.property', string='Property')
+    # property_id = fields.Many2one('estate.property', 'Property', required=True)
 
 
     name = fields.Char(string='Title', required=True)
@@ -57,3 +59,5 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('pending', 'Pending')
     ], string="Status")
+    
+    
