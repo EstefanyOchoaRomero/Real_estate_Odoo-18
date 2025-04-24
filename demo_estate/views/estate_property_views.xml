@@ -90,6 +90,7 @@
                         <field name="state"/>
                         <field name="status"/>
                         <field name="total_area"/>
+                        <field name="best_price" readonly="1" />
                         <!-- <field name="property_id"/> -->
                     </group>    
                 </group>

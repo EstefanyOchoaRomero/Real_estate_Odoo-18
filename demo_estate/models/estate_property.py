@@ -10,12 +10,19 @@ class EstateProperty(models.Model):
     def compute_total_area(self):
         for record in self:
             record.total_area = record.living_area + record.garden_area
-    
+
+    @api.depends('offer_ids.price')
+    def compute_best_price(self):
+        for record in self:
+            offers = record.offer_ids.mapped('price')
+            record.best_price = max(offers) if offers else 0
+
+
+    best_price = fields.Float(string="Best Price", compute='compute_best_price')
     property_type_id = fields.Many2one(
         "estate.property.type", string="Property Type")
     
     total_area = fields.Float(compute="compute_total_area")
-    
     offer_ids = fields.One2many(
         "estate.property.offer", 'property_id', string="Property Offers")
     buyer_id = fields.Many2one('res.partner', string="Buyer")
