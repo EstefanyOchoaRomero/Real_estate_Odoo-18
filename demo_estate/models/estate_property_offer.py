@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import models, fields, api
+from datetime import timedelta
 
 
 class EstatePropertyOffer(models.Model):
@@ -23,3 +24,25 @@ class EstatePropertyOffer(models.Model):
         string='Property',
         required=True
     )
+
+    validity = fields.Integer(
+        string="Validity (days)", default=7)
+
+        
+    date_deadline = fields.Date(
+        string="Date Deadline", 
+        compute="compute_date_deadline", 
+        inverse="inverse_date_deadline")
+
+    @api.depends('create_date', 'validity')
+    def compute_date_deadline(self):
+        for record in self:
+            if record.create_date:
+                record.date_deadline = record.create_date + timedelta(days=record.validity)
+                
+
+    def inverse_date_deadline(self):
+        for record in self:
+            if record.date_deadline and record.create_date:
+                record.validity = (record.date_deadline - record.create_date).days
+            

@@ -18,6 +18,7 @@ class EstateProperty(models.Model):
             record.best_price = max(offers) if offers else 0
 
 
+    property_id = fields.Many2one('estate.property.offer', string="Property Offer")
     best_price = fields.Float(string="Best Price", compute='compute_best_price')
     property_type_id = fields.Many2one(
         "estate.property.type", string="Property Type")
