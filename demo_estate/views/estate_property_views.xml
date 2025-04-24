@@ -30,6 +30,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
+                <field name="name_title"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
                 <field name="living_area"/>
@@ -88,6 +89,7 @@
                         <field name="partner_id"/>
                         <field name="state"/>
                         <field name="status"/>
+                        <field name="total_area"/>
                         <!-- <field name="property_id"/> -->
                     </group>    
                 </group>

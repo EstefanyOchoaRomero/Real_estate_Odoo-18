@@ -1,12 +1,20 @@
-from odoo import models, fields
+from odoo import models, fields, api
 from datetime import timedelta
 
 
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Real Estate Property'
+
+    @api.depends('living_area','garden_area') 
+    def compute_total_area(self):
+        for record in self:
+            record.total_area = record.living_area + record.garden_area
+    
     property_type_id = fields.Many2one(
         "estate.property.type", string="Property Type")
+    
+    total_area = fields.Float(compute="compute_total_area")
     
     offer_ids = fields.One2many(
         "estate.property.offer", 'property_id', string="Property Offers")
@@ -18,7 +26,7 @@ class EstateProperty(models.Model):
     name = fields.Char('Property Name', required=True)
     price = fields.Float(string="Price")
     partner_id = fields.Many2one('res.partner', string="Customer")
-    name = fields.Char(string='Title', required=True)
+    name_title = fields.Char(string='Title', required=True)
     description = fields.Text(string='Description')
     postcode = fields.Char(string='Postcode')
     date_availability = fields.Date(
@@ -59,3 +67,9 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('pending', 'Pending')
     ], string="Status")
+    
+    
+
+
+
+
