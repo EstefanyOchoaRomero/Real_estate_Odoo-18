@@ -17,6 +17,14 @@ class EstateProperty(models.Model):
             offers = record.offer_ids.mapped('price')
             record.best_price = max(offers) if offers else 0
 
+    @api.onchange('garden')
+    def _onchange_garden(self):
+        if self.garden:
+            self.garden_area = 10
+            self.garden_orientation = 'north'
+        else:
+            self.garden_area = 0
+            self.garden_orientation = False
 
     property_id = fields.Many2one('estate.property.offer', string="Property Offer")
     best_price = fields.Float(string="Best Price", compute='compute_best_price')
@@ -75,8 +83,6 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('pending', 'Pending')
     ], string="Status")
-    
-    
 
 
 
