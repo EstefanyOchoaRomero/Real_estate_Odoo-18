@@ -27,8 +27,4 @@ You can register and view properties for sale or rent.
 
     ],
 
-    # Only loaded in demo mode
-    # 'demo': [
-    #     'demo/demo.xml',
-    # ],
 }
