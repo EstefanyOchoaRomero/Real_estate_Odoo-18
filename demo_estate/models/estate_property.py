@@ -57,8 +57,12 @@ class EstateProperty(models.Model):
                 raise ValidationError(
                     f"The selling price ({record.selling_price}) cannot be lower than 90% of the expected price ({minimum_accepted_price})."
                 )
+    
+    def _compute_show_buttons(self):
+        for rec in self:
+            rec.show_action_buttons = rec.state not in ('sold', 'canceled')
 
-
+    show_action_buttons = fields.Boolean(compute="_compute_show_buttons")
     property_id = fields.Many2one('estate.property.offer', string="Property Offer")
     best_price = fields.Float(string="Best Price", compute='compute_best_price')
     property_type_id = fields.Many2one(

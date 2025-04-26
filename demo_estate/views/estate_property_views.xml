@@ -89,8 +89,10 @@
         <field name="arch" type="xml">
             <form string="Property">
                 <header>
-                    <button name="action_mark_as_sold" type="object" string="Sold" class="btn btn-success"/>
-                    <button name="action_mark_as_canceled" type="object" string="Cancel" class="btn btn-danger"/>    
+                    <button name="action_mark_as_sold" type="object" string="Sold" class="btn btn-success"
+                    invisible="not show_action_buttons"/>
+                    <button name="action_mark_as_canceled" type="object" string="Cancel" class="btn btn-danger"
+                    invisible="not show_action_buttons"/>
                 </header>
                 <sheet>
                     <group>
@@ -105,8 +107,8 @@
                         <group>
                             <field name="expected_price"/>
                             <field name="selling_price"/>
-                            <field name="property_type_id"/>
-                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="property_type_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="partner_id"/>
                             <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                             <field name="status"/>
@@ -154,6 +156,7 @@
             </form>
         </field>
     </record>
+                
 
 
     <record id="view_estate_property_type_form" model="ir.ui.view">
