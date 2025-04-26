@@ -97,7 +97,7 @@
                             <field name="property_type_id"/>
                             <field name="tag_ids" widget="many2many_tags"/>
                             <field name="partner_id"/>
-                            <field name="state"/>
+                            <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                             <field name="status"/>
                             <field name="total_area"/>
                             <field name="best_price" readonly="1" />
