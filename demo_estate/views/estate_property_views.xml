@@ -155,10 +155,20 @@
                         <field name="name" string="Name"/>
                         <field name="code" string="Code"/>
                     </group>
+                    <group>
+                        <field name="property_ids">
+                            <list>
+                                <field name="name"/>
+                                <field name="expected_price"/>
+                                <field name="state"/>
+                            </list>
+                        </field>
+                </group>
                 </sheet>
             </form>
         </field>
     </record>
+
 
 
     <record id="view_estate_property_tag_form" model="ir.ui.view">
