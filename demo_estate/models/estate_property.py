@@ -7,6 +7,11 @@ class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Real Estate Property'
 
+    _sql_constraints = [
+        ('check_expected_price_positive', 'CHECK(expected_price > 0)', 'Expected price must be strictly positive.'),
+        ('check_selling_price_positive', 'CHECK(selling_price > 0)', 'Selling price must be positive.')
+    ]
+
     @api.depends('living_area','garden_area') 
     def compute_total_area(self):
         for record in self:
