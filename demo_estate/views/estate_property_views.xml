@@ -43,6 +43,17 @@
         </field>
     </record>
 
+    <record id="view_estate_property_type_tree" model="ir.ui.view">
+        <field name="name">estate.property.type.tree</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
 
     <record id="view_estate_property_tag_tree" model="ir.ui.view">
                 <field name="name">property.tag.tree</field>
