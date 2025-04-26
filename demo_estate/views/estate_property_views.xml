@@ -132,7 +132,7 @@
                                         <field name="status"/>
                                         <field name="validity"/>
                                         <field name="date_deadline"/>
-                                        <button name="action_approve_offer" type="object" string="Accept" icon="fa-check" class="btn btn-success"/>
+                                        <button name="action_accept_offer" type="object" string="Accept" icon="fa-check" class="btn btn-success"/>
                                         <button name="action_reject_offer" type="object" string="Refuse" icon="fa-times" class="btn btn-danger"/>
                                     </list>
                                 </field>

@@ -1,6 +1,8 @@
 from odoo import models, fields, api
 from datetime import timedelta
 from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare, float_is_zero
 
 
 class EstateProperty(models.Model):
@@ -35,7 +37,7 @@ class EstateProperty(models.Model):
     def action_mark_as_sold(self):
         for record in self:
             if record.state == 'cancelled':
-                raise UserError("Canceled properties cannot be marked as sold.")
+                raise UserError("Cancelled properties cannot be marked as sold.")
             record.state = 'sold'
 
     def action_mark_as_canceled(self):
@@ -43,6 +45,17 @@ class EstateProperty(models.Model):
             if record.state == 'sold':
                 raise UserError("Sold properties cannot be canceled.")
             record.state = 'cancelled'
+
+    @api.constrains('selling_price', 'expected_price')
+    def _check_minimum_selling_price(self):
+        for record in self:
+            if float_is_zero(record.selling_price, precision_digits=2):
+                continue
+            minimum_accepted_price = record.expected_price * 0.9
+            if float_compare(record.selling_price, minimum_accepted_price, precision_digits=2) < 0:
+                raise ValidationError(
+                    f"The selling price ({record.selling_price}) cannot be lower than 90% of the expected price ({minimum_accepted_price})."
+                )
 
 
     property_id = fields.Many2one('estate.property.offer', string="Property Offer")
@@ -101,4 +114,3 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('pending', 'Pending')
     ], string="Status")
-    

@@ -1,6 +1,8 @@
 from odoo import models, fields, api
 from datetime import timedelta
 from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare
 
 
 class EstatePropertyOffer(models.Model):
@@ -33,6 +35,11 @@ class EstatePropertyOffer(models.Model):
         string="Date Deadline", 
         compute="compute_date_deadline", 
         inverse="inverse_date_deadline")
+    
+    currency_id = fields.Many2one(
+        'res.currency', 
+        string='Currency', 
+        default=lambda self: self.env.company.currency_id)
 
     @api.depends('create_date', 'validity')
     def compute_date_deadline(self):
@@ -49,21 +56,38 @@ class EstatePropertyOffer(models.Model):
     def action_approve_offer(self):
         for offer in self:
             offer.status = 'accepted'
+            self.property_id._check_minimum_selling_price()
 
     def action_reject_offer(self):
         for offer in self:
             offer.status = 'refused'            
 
+    @api.constrains('price', 'status')
+    def _check_price_threshold_on_accept(self):
+        for offer in self:
+            if offer.status == 'accepted':
+                expected = offer.property_id.expected_price
+                threshold = expected * 0.9
+                if float_compare(offer.price, threshold, precision_digits=2) < 0:
+                    raise ValidationError("Accepted offers must be at least 90% of the expected price.")
+
     def action_accept_offer(self):
         for offer in self:
-            if offer.property_id.status == 'sold':
-                raise UserError("This property is already sold, you cannot accept new offers.")
-            if offer.status == 'accepted':
-                raise UserError("This offer has already been accepted.")
+            expected = offer.property_id.expected_price
+            threshold = expected * 0.9
+
+            # Validar antes de aceptar
+            if float_compare(offer.price, threshold, precision_rounding=offer.currency_id.rounding) < 0:
+                raise ValidationError("Offer must be at least 90% of expected price.")
+
+            # Cancelar otras ofertas
+            other_offers = offer.property_id.offer_ids - offer
+            other_offers.write({'status': 'refused'})
+
+            # Aceptar la oferta
             offer.status = 'accepted'
             offer.property_id.selling_price = offer.price
             offer.property_id.buyer_id = offer.partner_id
-            offer.property_id.status = 'offer_accepted'
 
     def action_refuse_offer(self):
         for offer in self:
