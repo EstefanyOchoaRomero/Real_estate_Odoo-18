@@ -89,6 +89,8 @@
         <field name="arch" type="xml">
             <form string="Property">
                 <header>
+                
+                    
                     <button name="action_mark_as_sold" type="object" string="Sold" class="btn btn-success"
                     invisible="not show_action_buttons"/>
                     <button name="action_mark_as_canceled" type="object" string="Cancel" class="btn btn-danger"
@@ -112,7 +114,7 @@
                             <field name="partner_id"/>
                             <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                             <field name="status"/>
-                            <field name="total_area"/>
+                            <!-- <field name="total_area"/> -->
                             <field name="best_price" readonly="1" />
                             <field name="property_id"/>
                         </group>    
@@ -126,8 +128,9 @@
                                 <field name="facades"/>
                                 <field name="garage"/>
                                 <field name="garden"/>
-                                <field name="garden_area"/>
-                                <field name="garden_orientation"/>
+                                <field name="garden_area" invisible="not show_garden_fields"/>
+                                <field name="total_area" invisible="not show_garden_fields"/>
+                                <field name="garden_orientation" invisible="not show_garden_fields"/>
                             </group>
                         </page>
                         <page string="Sales Information">

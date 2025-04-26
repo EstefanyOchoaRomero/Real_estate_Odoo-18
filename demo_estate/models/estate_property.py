@@ -47,6 +47,25 @@ class EstateProperty(models.Model):
                 raise UserError("Sold properties cannot be canceled.")
             record.state = 'cancelled'
 
+    def action_make_offer(self):
+        for record in self:
+            record.state = 'offer_received'
+
+    
+    def action_accept_offer(self):
+        for record in self:
+            record.state = 'offer_accepted'
+
+    
+    def action_mark_as_sold(self):
+        for record in self:
+            record.state = 'sold'
+
+    
+    def action_mark_as_canceled(self):
+        for record in self:
+            record.state = 'canceled'       
+
     @api.constrains('selling_price', 'expected_price')
     def _check_minimum_selling_price(self):
         for record in self:
@@ -62,12 +81,18 @@ class EstateProperty(models.Model):
         for rec in self:
             rec.show_action_buttons = rec.state not in ('sold', 'canceled')
 
+    @api.depends('garden')
+    def _compute_show_garden_fields(self):
+        for record in self:
+            record.show_garden_fields = record.garden
+
+
+    show_garden_fields = fields.Boolean(compute="_compute_show_garden_fields")
     show_action_buttons = fields.Boolean(compute="_compute_show_buttons")
     property_id = fields.Many2one('estate.property.offer', string="Property Offer")
     best_price = fields.Float(string="Best Price", compute='compute_best_price')
     property_type_id = fields.Many2one(
         "estate.property.type", string="Property Type")
-    total_area = fields.Float(compute="compute_total_area")
     offer_ids = fields.One2many(
         "estate.property.offer", 'property_id', string="Property Offers")
     buyer_id = fields.Many2one('res.partner', string="Buyer")
@@ -95,6 +120,7 @@ class EstateProperty(models.Model):
     garage = fields.Boolean(string='Garage')
     garden = fields.Boolean(string='Garden')
     garden_area = fields.Integer(string='Garden Area')
+    total_area = fields.Float(compute="compute_total_area")
     garden_orientation = fields.Selection(
         string='Garden Orientation',
         selection=[
@@ -119,3 +145,4 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('pending', 'Pending')
     ], string="Status")
+    
