@@ -153,21 +153,35 @@ class EstateProperty(models.Model):
             journal = self.env['account.journal'].search([('type', '=', 'sale')], limit=1)
             if not journal:
                 raise UserError("No sales journal found.")
-
+            commission_fee = property.best_price * 0.06
+            admin_fee = 100.00
             invoice = self.env['account.move'].create({
                 'move_type': 'out_invoice',
                 'partner_id': property.buyer_id.id,
                 'invoice_date': fields.Date.today(),
                 'journal_id': journal.id,
-                'line_ids': [(0, 0, {
+                'invoice_line_ids': [(0, 0, {
                     'name': property.name,
                     'quantity': 1,
                     'price_unit': property.best_price,
+                }),
+                (0, 0, {
+                    'name': 'Commission (6%)',
+                    'quantity': 1,
+                    'price_unit': commission_fee,
+                }),
+                (0, 0, {
+                    'name': 'Administrative fees',
+                    'quantity': 1,
+                    'price_unit': admin_fee,
                 })],
+            
             })
-
+        
             invoice.action_post()
-    
+
+
+
 
 
 
