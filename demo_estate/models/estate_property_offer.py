@@ -42,6 +42,8 @@ class EstatePropertyOffer(models.Model):
         'res.currency', 
         string='Currency', 
         default=lambda self: self.env.company.currency_id)
+    
+    property_type_id = fields.Many2one('estate.property.type', related='property_id.property_type_id', store=True)
 
     @api.depends('create_date', 'validity')
     def compute_date_deadline(self):
