@@ -235,6 +235,22 @@
     </record>
 
 
+    <record id="view_users_form_inherited" model="ir.ui.view">
+        <field name="name">res.users.form.inherited</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="property_ids" widget="one2many_list" context="{'default_state': 'new'}"/>
+                        </group>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+
     <record id="estate_property_search_view" model="ir.ui.view">
                 <field name="name">estate.property.search.view</field>
                 <field name="model">estate.property</field>
@@ -261,6 +277,9 @@
 
 
 </odoo>
+
+
+
 
 
 
