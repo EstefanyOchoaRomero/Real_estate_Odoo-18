@@ -59,7 +59,7 @@
                 <field name="name">property.tag.tree</field>
                 <field name="model">estate.property.tag</field>
                 <field name="arch" type="xml">
-            <list>
+            <list editable="bottom">
                 <field name="name"/>
                 <field name="description"/>
             </list>
@@ -71,7 +71,7 @@
                 <field name="name">estate.property.offer.tree</field>
                 <field name="model">estate.property.offer</field>
                 <field name="arch" type="xml">
-            <list>
+            <list editable="bottom">
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="status"/>
@@ -140,8 +140,8 @@
                         </page>
                         <page string="Offers">
                             <group>
-                                <field name="offer_ids" readonly="state in ('accepted', 'sold', 'canceled')">
-                                    <list editable="bottom">
+                                <field name="offer_ids" readonly="state in ('accepted', 'sold', 'cancelled')">
+                                    <list editable="bottom" decoration-success="status=='accepted'" decoration-danger="status=='refused'">
                                         <field name="price"/>
                                         <field name="partner_id"/>
                                         <field name="status"/>
