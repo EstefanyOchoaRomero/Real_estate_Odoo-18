@@ -37,7 +37,7 @@
                 <field name="living_area"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
-                <field name="date_availability"/>
+                <field name="date_availability" optional="show"/>
                 <field name="property_type_id"/>
             </list>
         </field>
@@ -52,7 +52,7 @@
                 <field name="name"/>
             </list>
         </field>
-    </record>
+    </record> 
 
 
     <record id="view_estate_property_tag_tree" model="ir.ui.view">
