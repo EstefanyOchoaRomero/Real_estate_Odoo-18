@@ -13,6 +13,12 @@
                 name="Properties"
                 parent="estate_menu_properties"
                 action="action_estate_property"/>
+        
+
+        <menuitem id="estate_menu_property_action_kanban"
+                name="Properties Kanban"
+                parent="estate_menu_properties"
+                action="action_property_kanban"/>
 
         <menuitem id="menu_property_type" 
                         name="Property Types" 
@@ -31,6 +37,9 @@
                         parent="estate_menu_root"
                         action="action_property_tag"
                         sequence="30"/>
+
+        <!-- <menuitem id="estate_property_kanban_menu" name="Properties" action="action_property_kanban"/> -->
+                
 
 
 </odoo>
