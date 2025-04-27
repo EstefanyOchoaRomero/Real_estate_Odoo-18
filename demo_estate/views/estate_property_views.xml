@@ -233,6 +233,7 @@
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="expected_price"/>
+                <field name="living_area" string="Living Area (sqm)" filter_domain="[('living_area', '>=', self)]"/>
                 <filter string="Available" name="available" domain="[('state','=','available')]"/> 
                 <filter name="available_properties" string="Available"
                         domain="[('state', 'in', ('new', 'offer_received'))]"/>
@@ -249,6 +250,7 @@
 
 
 </odoo>
+
 
 
 
