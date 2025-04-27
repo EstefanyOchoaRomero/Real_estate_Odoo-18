@@ -82,6 +82,18 @@ class EstateProperty(models.Model):
     def _compute_show_garden_fields(self):
         for record in self:
             record.show_garden_fields = record.garden
+
+    def unlink(self):
+        for property in self:
+            if property.state not in ['new', 'cancelled']:
+                raise UserError("You cannot delete a property unless it is in 'New' or 'Cancelled' state.")
+        return super(EstateProperty, self).unlink()
+
+    @api.ondelete(at_uninstall=False)
+    def _check_deletable_state(self):
+        for record in self:
+            if record.state not in ('new', 'cancelled'):
+                raise UserError("You can only delete properties in 'New' or 'Cancelled' state.")
     
     
     show_garden_fields = fields.Boolean(compute="_compute_show_garden_fields")
@@ -142,6 +154,6 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('pending', 'Pending')
     ], string="Status")
-    
+
 
 

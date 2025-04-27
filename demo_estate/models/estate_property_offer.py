@@ -45,6 +45,40 @@ class EstatePropertyOffer(models.Model):
     
     property_type_id = fields.Many2one('estate.property.type', related='property_id.property_type_id', store=True)
 
+    @api.model
+    def create(self, vals):
+        property = self.env['estate.property'].browse(vals.get('property_id'))
+        existing_offers = self.env['estate.property.offer'].search([
+            ('property_id', '=', property.id),
+            ('price', '>=', vals['price'])
+        ])
+        
+        if existing_offers:
+            raise ValidationError("The offer price cannot be lower than an existing offer.")
+        property.write({'state': 'offer_received'})
+        return super(EstatePropertyOffer, self).create(vals)
+        
+
+    @api.model
+    def create(self, vals):
+        property_id = vals.get('property_id')
+        offer_price = vals.get('price')
+        property_obj = self.env['estate.property'].browse(property_id)
+        if property_obj.offer_ids and offer_price < max(property_obj.offer_ids.mapped('price')):
+            raise ValidationError("La oferta no puede ser inferior a una oferta existente.")
+        property_obj.state = 'offer_received'
+        return super().create(vals)
+
+    @api.model
+    def create(self, vals):
+        property_id = vals.get("property_id")
+        offer_price = vals.get("price")
+        property = self.env["estate.property"].browse(property_id)
+        if property.offer_ids.filtered(lambda o: o.price > offer_price):
+            raise ValidationError("Cannot create offer. There is already a higher offer.")
+        property.state = "offer_received"
+        return super().create(vals)
+
     @api.depends('create_date', 'validity')
     def compute_date_deadline(self):
         for record in self:
