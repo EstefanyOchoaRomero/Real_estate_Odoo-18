@@ -47,30 +47,6 @@ class EstatePropertyOffer(models.Model):
 
     @api.model
     def create(self, vals):
-        property = self.env['estate.property'].browse(vals.get('property_id'))
-        existing_offers = self.env['estate.property.offer'].search([
-            ('property_id', '=', property.id),
-            ('price', '>=', vals['price'])
-        ])
-        
-        if existing_offers:
-            raise ValidationError("The offer price cannot be lower than an existing offer.")
-        property.write({'state': 'offer_received'})
-        return super(EstatePropertyOffer, self).create(vals)
-        
-
-    @api.model
-    def create(self, vals):
-        property_id = vals.get('property_id')
-        offer_price = vals.get('price')
-        property_obj = self.env['estate.property'].browse(property_id)
-        if property_obj.offer_ids and offer_price < max(property_obj.offer_ids.mapped('price')):
-            raise ValidationError("La oferta no puede ser inferior a una oferta existente.")
-        property_obj.state = 'offer_received'
-        return super().create(vals)
-
-    @api.model
-    def create(self, vals):
         property_id = vals.get("property_id")
         offer_price = vals.get("price")
         property = self.env["estate.property"].browse(property_id)
@@ -91,14 +67,11 @@ class EstatePropertyOffer(models.Model):
             if record.date_deadline and record.create_date:
                 record.validity = (record.date_deadline - record.create_date).days
 
-    def action_approve_offer(self):
-        for offer in self:
-            offer.status = 'accepted'
-            self.property_id._check_minimum_selling_price()
-
     def action_reject_offer(self):
         for offer in self:
-            offer.status = 'refused'            
+            if offer.status == 'refused':
+                raise UserError("This offer has already been refused.")
+            offer.status = 'refused'           
 
     @api.constrains('price', 'status')
     def _check_price_threshold_on_accept(self):
@@ -120,13 +93,3 @@ class EstatePropertyOffer(models.Model):
             offer.status = 'accepted'
             offer.property_id.selling_price = offer.price
             offer.property_id.buyer_id = offer.partner_id
-
-    def action_refuse_offer(self):
-        for offer in self:
-            if offer.status == 'refused':
-                raise UserError("This offer has already been refused.")
-            offer.status = 'refused'
-
-
-
-

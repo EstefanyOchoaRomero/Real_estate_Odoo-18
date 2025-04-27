@@ -40,28 +40,14 @@ class EstateProperty(models.Model):
             if record.state == 'cancelled':
                 raise UserError("Cancelled properties cannot be marked as sold.")
             record.state = 'sold'
+        
+        self.create_invoice()
 
     def action_mark_as_canceled(self):
         for record in self:
             if record.state == 'sold':
                 raise UserError("Sold properties cannot be canceled.")
-            record.state = 'cancelled'
-
-    def action_make_offer(self):
-        for record in self:
-            record.state = 'offer_received'
-
-    def action_accept_offer(self):
-        for record in self:
-            record.state = 'offer_accepted'
-
-    def action_mark_as_sold(self):
-        for record in self:
-            record.state = 'sold'
-
-    def action_mark_as_canceled(self):
-        for record in self:
-            record.state = 'canceled'       
+            record.state = 'cancelled'    
 
     @api.constrains('selling_price', 'expected_price')
     def _check_minimum_selling_price(self):
@@ -94,8 +80,7 @@ class EstateProperty(models.Model):
         for record in self:
             if record.state not in ('new', 'cancelled'):
                 raise UserError("You can only delete properties in 'New' or 'Cancelled' state.")
-    
-    
+            
     show_garden_fields = fields.Boolean(compute="_compute_show_garden_fields")
     show_action_buttons = fields.Boolean(compute="_compute_show_buttons")
     property_id = fields.Many2one('estate.property.offer', string="Property Offer")
@@ -154,6 +139,35 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'),
         ('pending', 'Pending')
     ], string="Status")
+            
+    
+    def create_invoice(self):
+
+        for property in self:
+            if not property.buyer_id:
+                raise UserError("Buyer is missing.")
+
+            if not property.best_price:
+                raise UserError("Price is missing.")
+
+            journal = self.env['account.journal'].search([('type', '=', 'sale')], limit=1)
+            if not journal:
+                raise UserError("No sales journal found.")
+
+            invoice = self.env['account.move'].create({
+                'move_type': 'out_invoice',
+                'partner_id': property.buyer_id.id,
+                'invoice_date': fields.Date.today(),
+                'journal_id': journal.id,
+                'line_ids': [(0, 0, {
+                    'name': property.name,
+                    'quantity': 1,
+                    'price_unit': property.best_price,
+                })],
+            })
+
+            invoice.action_post()
+    
 
 
 

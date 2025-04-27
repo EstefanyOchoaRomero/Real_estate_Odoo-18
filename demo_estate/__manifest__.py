@@ -17,7 +17,7 @@ You can register and view properties for sale or rent.
     'version': '18.0.1.0.1',
 
     # Required modules for this one to work properly
-    'depends': ['base'],
+    'depends': ['base' , 'account'],
 
     # Always loaded
     'data': [
