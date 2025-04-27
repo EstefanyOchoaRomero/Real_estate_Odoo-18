@@ -79,16 +79,10 @@ class EstatePropertyOffer(models.Model):
         for offer in self:
             expected = offer.property_id.expected_price
             threshold = expected * 0.9
-
-            # Validar antes de aceptar
             if float_compare(offer.price, threshold, precision_rounding=offer.currency_id.rounding) < 0:
                 raise ValidationError("Offer must be at least 90% of expected price.")
-
-            # Cancelar otras ofertas
             other_offers = offer.property_id.offer_ids - offer
             other_offers.write({'status': 'refused'})
-
-            # Aceptar la oferta
             offer.status = 'accepted'
             offer.property_id.selling_price = offer.price
             offer.property_id.buyer_id = offer.partner_id
@@ -98,3 +92,7 @@ class EstatePropertyOffer(models.Model):
             if offer.status == 'refused':
                 raise UserError("This offer has already been refused.")
             offer.status = 'refused'
+
+
+
+

@@ -51,17 +51,14 @@ class EstateProperty(models.Model):
         for record in self:
             record.state = 'offer_received'
 
-    
     def action_accept_offer(self):
         for record in self:
             record.state = 'offer_accepted'
 
-    
     def action_mark_as_sold(self):
         for record in self:
             record.state = 'sold'
 
-    
     def action_mark_as_canceled(self):
         for record in self:
             record.state = 'canceled'       
@@ -85,8 +82,8 @@ class EstateProperty(models.Model):
     def _compute_show_garden_fields(self):
         for record in self:
             record.show_garden_fields = record.garden
-
-
+    
+    
     show_garden_fields = fields.Boolean(compute="_compute_show_garden_fields")
     show_action_buttons = fields.Boolean(compute="_compute_show_buttons")
     property_id = fields.Many2one('estate.property.offer', string="Property Offer")
@@ -146,3 +143,5 @@ class EstateProperty(models.Model):
         ('pending', 'Pending')
     ], string="Status")
     
+
+
