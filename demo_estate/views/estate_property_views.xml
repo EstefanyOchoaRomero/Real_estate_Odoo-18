@@ -37,9 +37,8 @@
         <field name="name">Properties Kanban</field>
         <field name="res_model">estate.property</field>
         <field name="view_mode">kanban</field>
-        <!-- <field name="view_id" ref="demo_estate_property_kanban_view"/> -->
-        <!-- <field name="target">current</field> -->
     </record>
+        
 
 
     <record id="demo_estate_property_tree_view" model="ir.ui.view">
@@ -316,37 +315,4 @@
     </record>
 
 
-    <!-- <record id="estate_property_kanban" model="ir.ui.view">
-        <field name="name">estate.property.kanban</field>
-        <field name="model">estate.property</field>
-        <field name="arch" type="xml">
-            <kanban group_by="type">
-                <field name="state"/>
-                <templates>
-                    <t t-name="kanban-box">
-                        <div draggable="false"> 
-                        
-                        </div>
-                    </t>
-                </templates>
-            </kanban>
-        </field>
-    </record> -->
-
-
-
-
 </odoo>
-
-
-
-
-
-
-
-
-
-
-
-
-

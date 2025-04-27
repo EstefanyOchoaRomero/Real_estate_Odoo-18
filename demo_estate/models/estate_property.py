@@ -179,9 +179,3 @@ class EstateProperty(models.Model):
             })
         
             invoice.action_post()
-
-
-
-
-
-

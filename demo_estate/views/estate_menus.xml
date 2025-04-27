@@ -38,18 +38,5 @@
                         action="action_property_tag"
                         sequence="30"/>
 
-        <!-- <menuitem id="estate_property_kanban_menu" name="Properties" action="action_property_kanban"/> -->
-                
-
 
 </odoo>
-
-
-
-
-
-
-
-
-
-
