@@ -240,13 +240,11 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="property_ids" widget="one2many_list" context="{'default_state': 'new'}"/>
-                        </group>
-                    </sheet>
-                </form>
+            <xpath expr="//sheet//group" position="inside">
+                <group>
+                    <field name="property_ids"/>
+            </group>
+            </xpath>
         </field>
     </record>
 
@@ -277,6 +275,8 @@
 
 
 </odoo>
+
+
 
 
 
