@@ -14,12 +14,6 @@
                 parent="estate_menu_properties"
                 action="action_estate_property"/>
         
-
-        <menuitem id="estate_menu_property_action_kanban"
-                name="Properties Kanban"
-                parent="estate_menu_properties"
-                action="action_property_kanban"/>
-
         <menuitem id="menu_property_type" 
                         name="Property Types" 
                         parent="estate_menu_properties" 
@@ -27,16 +21,12 @@
 
         <menuitem id="menu_property_tag" 
                         name="Property Tags" 
-                        parent="base.menu_custom" 
+                        parent="estate_menu_properties" 
                         action="action_property_tag"/>
-
-                        <menuitem id="estate_menu_root" name="Estate"/>
-
-        <menuitem id="menu_property_tags"
-                        name="Tags"
-                        parent="estate_menu_root"
-                        action="action_property_tag"
-                        sequence="30"/>
 
 
 </odoo>
+
+
+
+

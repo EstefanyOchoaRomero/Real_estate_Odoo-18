@@ -14,10 +14,10 @@ You can register and view properties for sale or rent.
     'website': "https://www.yourcompany.com",
 
     'category': 'Real Estate',
-    'version': '18.0.1.0.1',
+    'version': '18.0.1.0.2',
 
     # Required modules for this one to work properly
-    'depends': ['base' , 'account'],
+    'depends': ['base', 'account'],
 
     # Always loaded
     'data': [
