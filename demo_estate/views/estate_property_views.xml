@@ -139,6 +139,12 @@
                         invisible="not show_action_buttons"/>
                         <button name="action_mark_as_canceled" type="object" string="Cancel" class="btn btn-danger"
                         invisible="not show_action_buttons"/>
+                        <button name="%(report_all_properties_pdf)d"
+                                string="Print Report"
+                                type="action"
+                                class="oe_highlight"
+                                context="{'active_ids': active_ids}"
+                                />
                     </div>
                 </header>
                 <sheet>
