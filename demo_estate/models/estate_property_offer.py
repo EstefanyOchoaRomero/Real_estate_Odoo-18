@@ -101,5 +101,7 @@ class EstatePropertyOffer(models.Model):
             other_offers = offer.property_id.offer_ids - offer
             other_offers.write({'status': 'refused'})
             offer.status = 'accepted'
+            offer.property_id.state = 'offer_accepted'
             offer.property_id.selling_price = offer.price
             offer.property_id.buyer_id = offer.partner_id
+            

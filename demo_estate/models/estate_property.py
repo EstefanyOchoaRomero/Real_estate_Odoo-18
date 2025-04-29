@@ -40,14 +40,16 @@ class EstateProperty(models.Model):
             if record.state == 'cancelled':
                 raise UserError("Cancelled properties cannot be marked as sold.")
             record.state = 'sold'
-        
+            record.status = 'sold'
+
         self.create_invoice()
 
     def action_mark_as_canceled(self):
         for record in self:
             if record.state == 'sold':
                 raise UserError("Sold properties cannot be canceled.")
-            record.state = 'cancelled'    
+            record.state = 'cancelled'
+            record.status = 'cancelled'   
 
     @api.constrains('selling_price', 'expected_price')
     def _check_minimum_selling_price(self):
@@ -59,7 +61,7 @@ class EstateProperty(models.Model):
                 raise ValidationError(
                     f"The selling price ({record.selling_price}) cannot be lower than 90% of the expected price ({minimum_accepted_price})."
                 )
-    
+
     def _compute_show_buttons(self):
         for rec in self:
             rec.show_action_buttons = rec.state not in ('sold', 'canceled')
@@ -80,7 +82,7 @@ class EstateProperty(models.Model):
         for record in self:
             if record.state not in ('new', 'cancelled'):
                 raise UserError("You can only delete properties in 'New' or 'Cancelled' state.")
-            
+
     show_garden_fields = fields.Boolean(compute="_compute_show_garden_fields")
     show_action_buttons = fields.Boolean(compute="_compute_show_buttons")
     property_id = fields.Many2one('estate.property.offer', string="Property Offer")
@@ -97,7 +99,7 @@ class EstateProperty(models.Model):
     name = fields.Char('Property Name', required=True)
     price = fields.Float(string="Price")
     partner_id = fields.Many2one('res.partner', string="Customer")
-    name_title = fields.Char(string='Title', required=True)
+    name_title = fields.Char(string='Title')
     description = fields.Text(string='Description')
     postcode = fields.Char(string='Postcode')
     date_availability = fields.Date(
@@ -137,10 +139,9 @@ class EstateProperty(models.Model):
     status = fields.Selection([
         ('available', 'Available'),
         ('sold', 'Sold'),
-        ('pending', 'Pending')
-    ], string="Status")
-            
-    
+        ('pending', 'Pending'),
+        ('cancelled', 'Cancelled')], string="Status")
+
     def create_invoice(self):
 
         for property in self:
@@ -164,18 +165,16 @@ class EstateProperty(models.Model):
                     'name': property.name,
                     'quantity': 1,
                     'price_unit': property.best_price,
-                }),
-                (0, 0, {
+                }), (0, 0, {
                     'name': 'Commission (6%)',
                     'quantity': 1,
                     'price_unit': commission_fee,
-                }),
-                (0, 0, {
+                }), (0, 0, {
                     'name': 'Administrative fees',
                     'quantity': 1,
                     'price_unit': admin_fee,
                 })],
-            
+
             })
-        
+
             invoice.action_post()
