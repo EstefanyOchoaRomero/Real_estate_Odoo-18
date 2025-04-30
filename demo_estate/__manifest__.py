@@ -25,7 +25,7 @@ You can register and view properties for sale or rent.
         'security/ir.model.access.csv',
 
         # Firts views
-        'views/estate_property_views.xml',
+        # 'views/estate_property_views.xml',
         'views/estate_menus.xml',
 
         # Later reports

@@ -66,6 +66,12 @@ class EstateProperty(models.Model):
         for rec in self:
             rec.show_action_buttons = rec.state not in ('sold', 'canceled')
 
+    
+    def demo_estate_report_property(self):
+        self.ensure_one()
+        offers = self.offers_ids
+        return self.env.ref('demo_estate.property_offer_report').report_action(offers)        
+
     @api.depends('garden')
     def _compute_show_garden_fields(self):
         for record in self:
