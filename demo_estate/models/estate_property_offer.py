@@ -10,7 +10,6 @@ class EstatePropertyOffer(models.Model):
     _description = 'Property Offer'
     _order = "price desc"
 
-
     price = fields.Float('Price')
 
     status = fields.Selection([
@@ -37,13 +36,15 @@ class EstatePropertyOffer(models.Model):
         string="Date Deadline", 
         compute="compute_date_deadline", 
         inverse="inverse_date_deadline")
-    
+
     currency_id = fields.Many2one(
         'res.currency', 
         string='Currency', 
         default=lambda self: self.env.company.currency_id)
-    
-    property_type_id = fields.Many2one('estate.property.type', related='property_id.property_type_id', store=True)
+
+    property_type_id = fields.Many2one(
+        'estate.property.type', 
+        related='property_id.property_type_id', store=True)
 
     @api.model
     def create(self, vals):
@@ -51,7 +52,8 @@ class EstatePropertyOffer(models.Model):
         offer_price = vals.get("price")
         property = self.env["estate.property"].browse(property_id)
         if property.offer_ids.filtered(lambda o: o.price > offer_price):
-            raise ValidationError("Cannot create offer. There is already a higher offer.")
+            raise ValidationError(
+                "Cannot create offer. There is already a higher offer.")
         property.state = "offer_received"
         return super().create(vals)
 
@@ -59,13 +61,16 @@ class EstatePropertyOffer(models.Model):
     def compute_date_deadline(self):
         for record in self:
             if record.create_date:
-                create_date = fields.Datetime.from_string(record.create_date).date()
-                record.date_deadline = create_date + timedelta(days=record.validity)
-                
+                create_date = fields.Datetime.from_string(
+                    record.create_date).date()
+                record.date_deadline = create_date + timedelta(
+                    days=record.validity)
+
     def inverse_date_deadline(self):
         for record in self:
             if record.date_deadline and record.create_date:
-                record.validity = (record.date_deadline - record.create_date).days
+                record.validity = (
+                    record.date_deadline - record.create_date).days
 
     def action_reject_offer(self):
         for offer in self:
@@ -79,17 +84,24 @@ class EstatePropertyOffer(models.Model):
             if offer.status == 'accepted':
                 expected = offer.property_id.expected_price
                 threshold = expected * 0.9
-                if float_compare(offer.price, threshold, precision_digits=2) < 0:
-                    raise ValidationError("Accepted offers must be at least 90% of the expected price.")
+                if float_compare(
+                        offer.price, threshold, precision_digits=2) < 0:
+                    raise ValidationError(
+                        "Accepted offers must be at least 90% of the expected price.")
 
     def action_accept_offer(self):
         for offer in self:
             expected = offer.property_id.expected_price
             threshold = expected * 0.9
-            if float_compare(offer.price, threshold, precision_rounding=offer.currency_id.rounding) < 0:
-                raise ValidationError("Offer must be at least 90% of expected price.")
+            if float_compare(
+                    offer.price, threshold,
+                    precision_rounding=offer.currency_id.rounding) < 0:
+                raise ValidationError(
+                    "Offer must be at least 90% of expected price.")
             other_offers = offer.property_id.offer_ids - offer
             other_offers.write({'status': 'refused'})
             offer.status = 'accepted'
+            offer.property_id.state = 'offer_accepted'
             offer.property_id.selling_price = offer.price
             offer.property_id.buyer_id = offer.partner_id
+            

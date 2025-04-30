@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+    <data>
+
+        
+        <record id="report_all_properties_pdf" model="ir.actions.report">
+            <field name="name">All Properties Report</field>
+            <field name="model">estate.property</field>
+            <field name="report_name">demo_estate.report_all_properties</field>
+            <field name="report_type">qweb-pdf</field>
+        </record>
+
+    </data>
+</odoo>

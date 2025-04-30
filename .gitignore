@@ -165,3 +165,5 @@ cython_debug/
 #.idea/
 .vscode/
 Odoo*.conf
+*.pyc
+__pycache__/
