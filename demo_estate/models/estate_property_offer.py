@@ -104,4 +104,4 @@ class EstatePropertyOffer(models.Model):
             offer.property_id.state = 'offer_accepted'
             offer.property_id.selling_price = offer.price
             offer.property_id.buyer_id = offer.partner_id
-            
+

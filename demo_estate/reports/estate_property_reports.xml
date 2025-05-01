@@ -10,6 +10,9 @@
             file="demo_estate.report_property"
             print_report_name="'Property - %s' % (object.name)"
         />
+    <data>
+
+
 
     <data>
         <record id="property_report" model="ir.actions.report">
@@ -27,7 +30,7 @@
             
         </record>
 
-         <record id="base_act_report_xml_view" model="ir.actions.report">
+        <record id="base_act_report_xml_view" model="ir.actions.report">
             <field name="name">XML Report View</field>
             <field name="model">estate.property</field>
             <field name="report_type">qweb-pdf</field>
@@ -41,6 +44,7 @@
 
 
 </odoo>
+
 <!-- 
 <record id="property_report" model="ir.actions.report">
 <field name="name">Property Report</field>
