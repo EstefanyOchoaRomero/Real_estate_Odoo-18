@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <odoo>
-
-    
     <template id="report_property_document">
-        <t t-foreach="docs" t-as="property">
-            <t t-call="web.html_container">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="property">
                 <t t-call="web.external_layout">
                     <div class="page">
                         <h2>
@@ -13,15 +11,15 @@
                         </h2>
                         <div>
                             <strong>Salesman: </strong>
-                            <span t-field="property.user_id"/>
+                            <!-- <span t-field="property.user_id"/> -->
                         </div>
-                        <t t-call="estate.report_property_bid_info"/>
+                        <t t-call="demo_estate.report_property_bid_info"/>
                     </div>
                 </t>
             </t>
         </t>
     </template>
-
+    
     <template id="report_property_bid_info">
         <div>
             <strong>Expected Price: </strong>
@@ -57,13 +55,11 @@
                         <span t-field="offer.date_deadline"/>
                     </td>
                     <td>
-                        <span t-field="offer.state"/>
+                        <span t-field="offer.status"/>
                     </td>
                 </tr>
             </tbody>
         </table>
         <strong t-else="">No offers have been made yet :(</strong>
     </template>
-
-
 </odoo>

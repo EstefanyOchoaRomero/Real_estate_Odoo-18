@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- Este es el principal que coincide con el ID usado en tu botón -->
+    <!-- <record id="report_property" model="ir.actions.report">
+        <field name="name">Property Report</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">demo_estate.report_property_document</field>
+        <field name="report_file">demo_estate.report_property_document</field>
+        <field name="print_report_name">'Property - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">report</field>
+        <field name="binding_view_types">form</field>
+    </record> -->
+
+    <!-- Este es equivalente a tu property_report original -->
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Property Report Offers</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">demo_estate.report_property_document</field>
+        <field name="report_file">demo_estate.report_property_document</field>
+        <field name="print_report_name">'Property Offers'</field>
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">action</field>
+        <field name="multi">True</field>
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+    <!-- Este es tu base_act_report_xml_view original -->
+    <!-- <record id="base_act_report_xml_view" model="ir.actions.report">
+        <field name="name">XML Report View</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">demo_estate.report_property_document</field>
+        <field name="report_file">demo_estate.report_property_document</field>
+        <field name="print_report_name">'XML Report View'</field>
+        <field name="binding_model_id" ref="model_estate_property"/>
+    </record> -->
+
+
+</odoo>
+
+
+
+<!-- 
+<record id="property_report" model="ir.actions.report">
+<field name="name">Property Report</field>
+<field name="model">estate.property</field>
+<field name="binding_model_id" ref="model_estate_property"/>
+<field name="binding_type">action</field>
+<field name="report_type">qweb-pdf</field>
+<field name="report_name">demo_estate.property_report_template</field>
+<field name="report_file">demo_estate.property_report_template</field>
+<field name="print_report_name">'Properties</field>
+<field name="multi">True</field>
+<field name="binding_view_types">list,form</field>
+</record> -->

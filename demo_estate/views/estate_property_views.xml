@@ -135,22 +135,30 @@
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
                     <div class="float-end">
-                        <button name="action_mark_as_sold" type="object" string="Sold" class="btn btn-success"
-                        invisible="not show_action_buttons"/>
-                        <button name="action_mark_as_canceled" type="object" string="Cancel" class="btn btn-danger"
-                        invisible="not show_action_buttons"/>
-                        <button name="%(demo_estate.report_property)d"
-                                string="Print Report"
-                                type="action"
-                                class="oe_highlight"
-                                <!-- context="{'active_ids': active_ids}" "permitir descargar desde el boton"
-                                /> -->
-                                
-                        <button name="demo_estate.report_propertyt"
-                            type="object"
-                            string="Print Offers Report"
-                            class="btn-primary" />
-                    </div>
+                            <button name="action_mark_as_sold" type="object" string="Sold" class="btn btn-success" 
+                                    invisible="not show_action_buttons"/>
+                            <button name="action_mark_as_canceled" type="object" string="Cancel" class="btn btn-danger" 
+                                    invisible="not show_action_buttons"/>
+
+                            <!-- <button name="demo_estate.property_report"
+                                    string="Print Report"
+                                    type="action"
+                                    class="oe_highlight"
+                                    context="{'active_ids': [id]}"
+                                    groups="base.group_system"/> -->
+
+                            <!-- <button name="demo_estate.property_report" 
+                                    string="Print Report" type="action" class="oe_highlight" context="{'active_ids': active_ids}"/> -->
+
+        
+                            <!-- <button name="%(demo_estate.report_property_document)d"
+                                    string="Print Report"
+                                    type="action"
+                                    class="oe_highlight"
+                                    context="{'active_ids': active_ids}"/> -->
+                            <!-- permitir descargar desde el boton -->
+                    </div>    
+                
                 </header>
                 <sheet>
                     <div class="oe_title">
