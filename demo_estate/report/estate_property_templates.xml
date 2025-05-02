@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
+
 <odoo>
+
+
     <template id="report_property_document">
-        <t t-call="web.html_container">
+    <t t-call="web.external_layout">
+        <main class="o_report_layout">
             <t t-foreach="docs" t-as="property">
-                <t t-call="web.external_layout">
-                    <div class="page">
-                        <h2>
-                            <span t-field="property.name"/>
-                        </h2>
-                        <div>
-                            <strong>Salesman: </strong>
-                            <!-- <span t-field="property.user_id"/> -->
-                        </div>
-                        <t t-call="demo_estate.report_property_bid_info"/>
+                <div class="page">
+                    <h2>
+                        <span t-field="property.name"/>
+                    </h2>
+                    <div>
+                        <strong>Salesman: </strong>
+                        <!-- <span t-field="property.user_id"/> -->
                     </div>
-                </t>
+
+                    <t t-set="property" t-value="property"/>
+                    <t t-call="demo_estate.report_property_bid_info"/>
+                </div>
             </t>
-        </t>
-    </template>
+        </main>
+    </t>
+</template>
+
     
     <template id="report_property_bid_info">
         <div>
@@ -29,6 +35,13 @@
             <strong>Status: </strong>
             <span t-field="property.state"/>
         </div>
+
+        <!-- Condición para mostrar mensaje si no hay ofertas -->
+        <t t-if="not property.offer_ids">
+            <p>No hay ofertas para esta propiedad :(</p>
+        </t>
+
+        <!-- Mostrar la tabla solo si hay ofertas -->
         <table class="table" t-if="property.offer_ids">
             <thead>
                 <tr>
@@ -40,26 +53,34 @@
                 </tr>
             </thead>
             <tbody>
-                <t t-set="offers" t-value="property.mapped('offer_ids')"/>
-                <tr t-foreach="offers" t-as="offer">
-                    <td>
-                        <span t-field="offer.price"/>
-                    </td>
-                    <td>
-                        <span t-field="offer.partner_id"/>
-                    </td>
-                    <td>
-                        <span t-field="offer.validity"/>
-                    </td>
-                    <td>
-                        <span t-field="offer.date_deadline"/>
-                    </td>
-                    <td>
-                        <span t-field="offer.status"/>
-                    </td>
-                </tr>
+                <!-- Recorrer las ofertas de la propiedad -->
+                <t t-foreach="property.offer_ids" t-as="offer">
+                    <tr>
+                        <td>
+                            <span t-field="offer.price"/>
+                        </td>
+                        <td>
+                            <span t-field="offer.partner_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="offer.validity"/>
+                        </td>
+                        <td>
+                            <span t-field="offer.date_deadline" t-options='{"widget": "date"}'/>
+                        </td>
+                        <td>
+                            <span t-field="offer.status"/>
+                        </td>
+                    </tr>
+                </t>
             </tbody>
         </table>
-        <strong t-else="">No offers have been made yet :(</strong>
     </template>
+
+
 </odoo>
+
+
+
+
+

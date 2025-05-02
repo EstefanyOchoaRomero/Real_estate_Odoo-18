@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Sub-template for the table of offers -->
+    <template id="report_offer_table">
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Candidate</th>
+                    <th>Offer (€)</th>
+                    <th>% of Expected Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="docs" t-as="offer">
+                    <tr>
+                        <td><span t-field="offer.property_id.name"/></td>
+                        <td><span t-field="offer.partner_id.name"/></td>
+                        <td><span t-field="offer.price"/></td>
+                        <td>
+                            <t t-set="percent" t-value="(offer.price / offer.property_id.expected_price) * 100"/>
+                            <t t-esc="percent"/>%
+                        </td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <!-- Main template for the PDF document -->
+    <template id="report_offer_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Offers Report</h2>
+                <t t-call="demo_estate.report_offer_table"/>
+            </div>
+        </t>
+    </template>
+</odoo>
