@@ -8,12 +8,14 @@
     <t t-call="web.external_layout">
         <main class="o_report_layout">
             <t t-foreach="docs" t-as="property">
-                <div class="page">
+            <div class="page" t-attf-style="page-break-before: always;">
+                
                     <h2>
                         <span t-field="property.name"/>
                     </h2>
                     <div>
                         <strong>Salesman: </strong>
+                        <span t-field="property.salesperson_id.name"/>
                         
                     </div>
 
@@ -38,13 +40,13 @@
 
         
         <t t-if="not property.offer_ids">
-            <p>No hay ofertas para esta propiedad :(</p>
+            <p>There are no offers for this property :(</p>
         </t>
 
         
         <table class="table" t-if="property.offer_ids">
             <thead>
-                <tr>
+                 <tr style="background-color: #74649c; color: white;">
                     <th>Price</th>
                     <th>Partner</th>
                     <th>Validity (days)</th>
