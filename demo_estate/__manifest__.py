@@ -14,7 +14,7 @@ You can register and view properties for sale or rent.
     'website': "https://www.yourcompany.com",
 
     'category': 'Real Estate',
-    'version': '18.0.1.0.3',
+    'version': '18.0.1.0.9',
 
     # Required modules for this one to work properly
     'depends': ['base', 'account'],
@@ -25,14 +25,16 @@ You can register and view properties for sale or rent.
         'security/ir.model.access.csv',
 
         # Firts views
-        # 'views/estate_property_views.xml',
+        'views/estate_property_views.xml',
         'views/estate_menus.xml',
 
         # Later reports
         'report/estate_property_templates.xml',
+        'report/estate_property_offers_report.xml',
+        'report/estate_property_approved_report.xml',
 
         # Finally, the actions that use those templates
-        'report/estate_property_reports.xml',
+        'report/estate_property_report.xml',
 
     ],
 

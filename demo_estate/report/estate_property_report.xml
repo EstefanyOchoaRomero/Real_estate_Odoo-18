@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+
+
+    <record id="property_report" model="ir.actions.report">
+        <field name="name">Print Report Offers</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">demo_estate.report_property_document</field>
+        <field name="report_file">demo_estate.report_property_document</field>
+        <field name="print_report_name">Property Offers</field>
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">action</field>
+        <field name="multi">True</field>
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+    <record id="approved_offers_report" model="ir.actions.report">
+        <field name="name">Print Approved Offers</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">demo_estate.report_approved_offers_document</field>
+        <field name="report_file">demo_estate.report_approved_offers_document</field>
+        <field name="print_report_name">Approved Property Offers</field>
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">action</field>
+        <field name="multi">True</field>
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+    <record id="approved_proposed_report" model="ir.actions.report">
+        <field name="name">Print Proposed Offers</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">demo_estate.estate_property_approved_report</field>
+        <field name="report_file">demo_estate.estate_property_approved_report</field>
+        <field name="print_report_name">Approved and Proposed Offers</field>
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">action</field>
+        <field name="multi">True</field>
+        <field name="binding_view_types">list,form</field>
+    </record>
+
+
+</odoo>
+
+
+
+
+
+

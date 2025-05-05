@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<odoo>
+
+
+    <template id="estate_property_approved_report">
+
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Approved and Proposed Offers</h2>
+                    
+                    
+                    <t t-if="docs">
+                        <table class="table table-sm" style="width: 100%;">
+                            <thead>
+                                <tr style="background-color: #74649c; color: white;">
+                                    <th>Property</th>
+                                    <th>Partner</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="docs.mapped('offer_ids')" t-as="offer">
+                                    <t t-if="offer.status == 'accepted' or not offer.status">
+                                        <tr t-attf-style="background-color: #{ 'lightgreen' if offer.status == 'accepted' else '#f0f0f0' };">
+                                            <td><span t-field="offer.property_id.name"/></td>
+                                            <td><span t-field="offer.partner_id"/></td>
+                                            <td><span t-field="offer.price"/></td>
+                                            <td><span t-esc="offer.status or 'Proposed'"/></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+
+                    
+                    <t t-else="">
+                        <p>No data to preview. This is a placeholder for the Approved and Proposed Offers report.</p>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>
+
+
+
+
+
+
+
+

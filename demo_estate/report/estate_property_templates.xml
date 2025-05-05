@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<odoo>
+
+
+    <template id="report_property_document">
+    <t t-call="web.external_layout">
+        <main class="o_report_layout">
+            <t t-foreach="docs" t-as="property">
+                <div class="page">
+                    <h2>
+                        <span t-field="property.name"/>
+                    </h2>
+                    <div>
+                        <strong>Salesman: </strong>
+                        
+                    </div>
+
+                    <t t-set="property" t-value="property"/>
+                    <t t-call="demo_estate.report_property_bid_info"/>
+                </div>
+            </t>
+        </main>
+    </t>
+</template>
+
+    
+    <template id="report_property_bid_info">
+        <div>
+            <strong>Expected Price: </strong>
+            <span t-field="property.expected_price"/>
+        </div>
+        <div>
+            <strong>Status: </strong>
+            <span t-field="property.state"/>
+        </div>
+
+        
+        <t t-if="not property.offer_ids">
+            <p>No hay ofertas para esta propiedad :(</p>
+        </t>
+
+        
+        <table class="table" t-if="property.offer_ids">
+            <thead>
+                <tr>
+                    <th>Price</th>
+                    <th>Partner</th>
+                    <th>Validity (days)</th>
+                    <th>Deadline</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+                <t t-foreach="property.offer_ids" t-as="offer">
+                    <tr>
+                        <td>
+                            <span t-field="offer.price"/>
+                        </td>
+                        <td>
+                            <span t-field="offer.partner_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="offer.validity"/>
+                        </td>
+                        <td>
+                            <span t-field="offer.date_deadline" t-options='{"widget": "date"}'/>
+                        </td>
+                        <td>
+                            <span t-field="offer.status"/>
+                        </td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+
+</odoo>
+
+
+
+
+
