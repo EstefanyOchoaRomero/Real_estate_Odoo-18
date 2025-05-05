@@ -9,6 +9,10 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
+                <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+
+                    
+                    <div style="flex: 0 0 80%; transform: scale(0.95); transform-origin: top left; overflow: hidden;">
                     <h2>Approved and Proposed Offers</h2>
                     
                     
@@ -42,12 +46,28 @@
                         <p>No data to preview. This is a placeholder for the Approved and Proposed Offers report.</p>
                     </t>
                 </div>
+                <div style="flex: 0 0 20%; padding-top: 15px;">
+                        <hr/>
+                        <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                            <div>
+                                <strong>Signature:</strong>
+                                <br/><br/>
+                                ___________________________
+                            </div>
+                            <div>
+                                <strong>Date:</strong>
+                                <br/>
+                                <span t-esc="format_date(time.strftime('%Y-%m-%d'))"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </t>
         </t>
     </template>
-
-
 </odoo>
+
 
 
 
