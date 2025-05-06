@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <odoo>
+    <template id="estate_property_approved_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 style="color:#74649c; margin-bottom:12px; padding-top:20px;">
+                        Approved and Proposed Offers
+                    </h2>
+                    <t t-if="docs">
+                        <table class="table table-sm o_main_table" style="width:100%; margin-bottom:4px;">
+                            <thead>
+                                <tr style="background-color:#74649c; color:white;">
+                                    <th>Property</th><th>Partner</th><th>Price</th><th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="docs.mapped('offer_ids')" t-as="offer">
+                                    <t t-if="offer.status=='accepted' or not offer.status">
+                                        <tr t-attf-style="background-color: #{ 'lightgreen' if offer.status=='accepted' else '#f0f0f0' };">
+                                            <td><span t-field="offer.property_id.name"/></td>
+                                            <td><span t-field="offer.partner_id"/></td>
+                                            <td><span t-field="offer.price"/></td>
+                                            <td><span t-esc="offer.status or 'Proposed'"/></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-else="">
+                        <p>No data to preview.</p>
+                    </t>
+                    <div style="border-top:1px solid #74649c; margin-top:4px;"></div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+
+
+
+
+
+
+
+
+<!-- <odoo>
     <template id="estate_property_approved_report">
         <t t-call="web.html_container">
         <t t-call="web.external_layout">
@@ -62,3 +107,6 @@
         </t>
     </template>
 </odoo>
+ -->
+
+

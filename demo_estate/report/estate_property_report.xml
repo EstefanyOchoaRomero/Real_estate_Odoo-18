@@ -42,6 +42,7 @@
         <field name="multi">True</field>
         <field name="binding_view_types">list,form</field>
         <field name="paperformat_id" ref="demo_estate_paperformat"/>
+        <field name="print_report_name">'Offers - %s' % (object.name)</field>
     </record>
 
 
