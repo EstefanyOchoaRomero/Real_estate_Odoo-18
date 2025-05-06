@@ -14,7 +14,7 @@ You can register and view properties for sale or rent.
     'website': "https://www.yourcompany.com",
 
     'category': 'Real Estate',
-    'version': '18.0.1.0.9',
+    'version': '18.0.1.0.10',
 
     # Required modules for this one to work properly
     'depends': ['base', 'account'],
@@ -34,7 +34,9 @@ You can register and view properties for sale or rent.
         'report/estate_property_approved_report.xml',
 
         # Finally, the actions that use those templates
+        'report/estate_property_report_paperformat.xml',
         'report/estate_property_report.xml',
+        
 
     ],
 

@@ -9,25 +9,20 @@
         <main class="o_report_layout">
             <t t-foreach="docs" t-as="property">
             <div class="page" t-attf-style="page-break-before: always;">
-                
                     <h2>
                         <span t-field="property.name"/>
                     </h2>
                     <div>
                         <strong>Salesman: </strong>
                         <span t-field="property.salesperson_id.name"/>
-                        
                     </div>
-
                     <t t-set="property" t-value="property"/>
                     <t t-call="demo_estate.report_property_bid_info"/>
                 </div>
             </t>
         </main>
     </t>
-</template>
-
-    
+    </template>
     <template id="report_property_bid_info">
         <div>
             <strong>Expected Price: </strong>
@@ -37,16 +32,12 @@
             <strong>Status: </strong>
             <span t-field="property.state"/>
         </div>
-
-        
         <t t-if="not property.offer_ids">
             <p>There are no offers for this property :(</p>
         </t>
-
-        
         <table class="table" t-if="property.offer_ids">
             <thead>
-                 <tr style="background-color: #74649c; color: white;">
+                <tr style="background-color: #74649c; color: white;">
                     <th>Price</th>
                     <th>Partner</th>
                     <th>Validity (days)</th>
@@ -55,7 +46,6 @@
                 </tr>
             </thead>
             <tbody>
-        
                 <t t-foreach="property.offer_ids" t-as="offer">
                     <tr>
                         <td>

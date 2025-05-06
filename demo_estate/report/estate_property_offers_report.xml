@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-
 <odoo>
+
+
     <template id="report_approved_offers_document">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
@@ -41,51 +42,10 @@
             </t>
         </t>
     </template>
+
+    
 </odoo>
 
 
 
-<!-- <odoo>
-
-
-    <template id="report_approved_offers_document">
-        <t t-call="web.html_container">
-            <t t-call="web.external_layout">
-                <t t-foreach="docs" t-as="property">
-                    <div class="page">
-                        <h2>
-                            Property: <span t-field="property.name"/>
-                        </h2>
-                        <p><strong>Expected Price:</strong> <span t-field="property.expected_price"/></p>
-
-                        <h4>Approved Offers:</h4>
-                        <table class="table table-sm mt-2">
-                            <thead>
-                                <tr>
-                                    <th>Buyer</th>
-                                    <th>Offer Price</th>
-                                    <th>Percentage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="property.offer_ids.filtered(lambda o: o.status == 'accepted')" t-as="offer">
-                                    <tr>
-                                        <td><span t-field="offer.partner_id"/></td>
-                                        <td><span t-field="offer.price"/></td>
-                                        <td>
-                                            <t t-set="percentage" t-value="(offer.price / property.expected_price) * 100"/>
-                                            <t t-esc="'%.2f' % percentage"/> 
-                                        </td>
-                                    </tr>
-                                </t>
-                            </tbody>
-                        </table>
-                    </div>
-                </t>
-            </t>
-        </t>
-    </template>
-
-
-</odoo> -->
 
