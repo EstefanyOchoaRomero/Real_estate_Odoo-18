@@ -6,15 +6,25 @@
 
     <template inherit_id="demo_estate.estate_property_approved_report" id="report_approved_offers_inherit_signature">
         <xpath expr="//div[@class='page']" position="inside">
-            
-            <div class="signature" style="margin-top: 50px;">
-                <p>Approved by:</p>
-                <p>__________________________ <strong>Date:</strong> <span t-esc="time.strftime('%Y-%m-%d')"/></p>
-            </div>
-            <div class="date" style="margin-top: 20px; text-align: right;">
-            </div>
+            <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                <tr>
+                    <td style="text-align: left; white-space: nowrap;">Approved by:_______________________________</td>
+                    <td style="width: 100%;"></td>
+                    <td style="text-align: right; white-space: nowrap;"><strong>Date:</strong> <span t-esc="time.strftime('%Y-%m-%d')"/></td>
+                </tr>
+            </table>
         </xpath>
     </template>
 
 
 </odoo>
+
+
+
+
+
+
+
+
+
+
